@@ -2,9 +2,11 @@
     width: 100%;
     height: 100vh;
     background-image: url('~src/assets/img/board.jpg');
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-repeat: no-repeat;
 }
 
 .card-stack {
@@ -52,6 +54,7 @@
 .player-position {
     position: absolute;
     right: 0;
+    z-index: 1;
 }
 
 .btn-add {
