@@ -29,6 +29,10 @@ export class GameInfoComponent implements OnChanges {
 
   @Input() numberOfPlayers: number;
 
+
+  /**
+   * This function is used to change the displayed texts in the card info container
+   */
   ngOnChanges(): void {
     if (this.card) {
       let cardNumber = +this.card.split('_')[1];

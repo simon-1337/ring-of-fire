@@ -34,6 +34,9 @@ export class GameComponent implements OnInit{
    }
 
 
+   /**
+    * This function is used to initialize the game
+    */
   ngOnInit() {
     this.newGame();
     this.setRoute();
@@ -41,6 +44,9 @@ export class GameComponent implements OnInit{
   }
 
 
+  /**
+   * This function is used to get the game id from the url
+   */
   setRoute() {
     this.route.params.subscribe( (params) => {
       this.gameId = params['id'];
@@ -48,33 +54,53 @@ export class GameComponent implements OnInit{
   }
 
 
+  /**
+   * This function is used get the game from the database and subscribe to it to get the updates
+   */
   setCurrentGame() {
     this.docRef = doc(this.coll, this.gameId);
     this.game$ = docData(this.docRef);
     this.game$.subscribe( (game: any) =>  {  
-       const currentGame = game;
-       console.log(currentGame);
-       this.game.playedCards = game.playedCards;
-       this.game.players = game.players;
-       this.game.playerImages = game.playerImages;
-       this.game.stack = game.stack;
-       this.game.currentPlayer = game.currentPlayer;
-       this.game.pickCardAnimation = game.pickCardAnimation;
-       this.game.currentCard = game.currentCard;
+       this.getDataFromFirestore(game);
     });
   }
 
 
+  /**
+   * This function is used to save the data from the database in the local game variables
+   * 
+   * @param game - The game loaded from the database
+   */
+  getDataFromFirestore(game) {
+    this.game.playedCards = game.playedCards;
+    this.game.players = game.players;
+    this.game.playerImages = game.playerImages;
+    this.game.stack = game.stack;
+    this.game.currentPlayer = game.currentPlayer;
+    this.game.pickCardAnimation = game.pickCardAnimation;
+    this.game.currentCard = game.currentCard;
+  }
+
+
+  /**
+   * This function is used to start a new Game
+   */
   newGame() {
     this.game = new Game();
   }
 
-  //Whenever a player does an action, the data in firebase needs to be updated
+
+  /**
+   * This function updates the data in firebase
+   */
   saveGame() {
     updateDoc(this.docRef, this.game.toJson());
   }
 
 
+  /**
+   * This function is used to take a card from the stack, play the animations, and save the changes to the firestore database
+   */
   takeCard() {
     if (this.game.stack.length == 0) {
       this.gameOver = true;
@@ -93,6 +119,9 @@ export class GameComponent implements OnInit{
   }
 
 
+  /**
+   * This function is used to open the window to add a new player
+   */
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
@@ -106,11 +135,13 @@ export class GameComponent implements OnInit{
   }
 
 
-  editPlayer(playerId: number) {
-    console.log('Edit Player: ' + playerId);
-    
+  /**
+   * This function is used to edit the players image or to delete the player
+   * 
+   * @param playerId - The id of the player that will be edited
+   */
+  editPlayer(playerId: number) {   
     const dialogRef = this.dialog.open(EditPlayerComponent);
-
     dialogRef.afterClosed().subscribe((change: string) => {
       if (change) {
         if (change == "DELETE") {

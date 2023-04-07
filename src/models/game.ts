@@ -19,6 +19,12 @@ export class Game {
 
     }
 
+
+    /**
+     * This function is used to return the variables stored in the game object in a json object
+     * 
+     * @returns A JSON Object
+     */
     public toJson() {
         return {
             players: this.players,
@@ -36,6 +42,13 @@ export class Game {
       
 }
 
+
+/**
+ * This function is used to shuffle the cards in the stack (random order)
+ * 
+ * @param array - The stack of cards
+ * @returns The stack of cards in a random order
+ */
 function shuffle(array: string[]) {
     let currentIndex = array.length,  randomIndex;
   

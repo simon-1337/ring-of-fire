@@ -15,6 +15,10 @@ export class DialogAddPlayerComponent {
 
   name: string = '';
 
+
+  /**
+   * This funtion is used to close the dialog window where players can be added 
+   */
   onNoClick() {
     this.dialogRef.close();
   }
