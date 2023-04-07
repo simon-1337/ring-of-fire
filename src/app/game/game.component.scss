@@ -57,6 +57,28 @@
     z-index: 1;
 }
 
+.scroll-ctn {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    overflow-x: auto;
+
+    app-player-mobile {
+        margin-left: 8px;
+    }
+}
+
+.game-over {
+    img {
+        object-position: 42%;
+        width: 100%;
+        object-fit: cover;
+        height: 100vh;
+    }
+}
+
 .btn-add {
     position: absolute;
     right: 32px;
@@ -68,4 +90,18 @@
     bottom: 32px;
     left: 100px;
     right: 100px;
+
+    @media (max-width: 720px) {
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+app-player, app-player-mobile {
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(1.15);
+    }
 }
